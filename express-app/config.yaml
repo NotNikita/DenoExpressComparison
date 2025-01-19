@@ -1,9 +1,8 @@
 ---
-appPort: 8080
+appPort: 7070
 db:
   user: postgres
   password: 1946alien
   host: postgres #localhost when running via cmd
   database: postgres
   table: deno_cars
-  maxConnections: 20

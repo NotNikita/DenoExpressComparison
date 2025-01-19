@@ -13,6 +13,16 @@ services:
       postgres:
         condition: service_healthy
         restart: true
+
+  express-app:
+    container_name: express-app
+    build: ./express-app/
+    ports:
+      - "7070:7070"
+    depends_on:
+      postgres:
+        condition: service_healthy
+        restart: true
   postgres:
     image: postgres:17.2
     container_name: postgres

@@ -15,14 +15,10 @@ export async function saveCarInDB({ id, producer, year }: Car) {
   return sql`INSERT INTO "deno_cars" (id, producer, year) VALUES (${id}, ${producer}, ${year})`;
 }
 
-// Logs existing tables in the database
-export async function logExistingTables() {
-  const result =
-    await sql`SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'`;
-  console.log(
-    "Existing tables:",
-    result.map((row: any) => row.table_name)
-  );
+// Counts rows in the deno_cars table
+export async function countRows() {
+  const result = await sql`SELECT COUNT(*) FROM "deno_cars"`;
+  return result[0].count;
 }
 
 export default sql;

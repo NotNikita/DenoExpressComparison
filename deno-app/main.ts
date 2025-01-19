@@ -1,5 +1,5 @@
 import config from "./config.ts";
-import { logExistingTables, saveCarInDB } from "./database.ts";
+import { saveCarInDB, countRows } from "./database.ts";
 import { Car } from "./types.ts";
 
 Deno.serve({ port: config.appPort }, async (req) => {
@@ -12,7 +12,6 @@ Deno.serve({ port: config.appPort }, async (req) => {
       producer: "BMW",
       year: 2025,
     } as Car;
-    logExistingTables();
 
     return Response.json(car);
   }
@@ -31,6 +30,11 @@ Deno.serve({ port: config.appPort }, async (req) => {
         console.error(e);
         return Response.json({ message: e.message }, { status: 400 });
       });
+  }
+
+  if (req.method === "GET" && url === "/api/count") {
+    const count = await countRows();
+    return Response.json({ count });
   }
 
   return new Response("Resource not found", { status: 404 });
