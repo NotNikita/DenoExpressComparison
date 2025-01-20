@@ -13,6 +13,19 @@ services:
       postgres:
         condition: service_healthy
         restart: true
+    deploy:
+      # configures physical resource constraints for container to run on platform
+      resources:
+        # The platform must prevent the container to allocate more.
+        limits:
+          # configures a limit or reservation for how much of the available CPU resources, as number of cores, a container can use.
+          cpus: "1.0"
+          # configures a limit or reservation on the amount of memory a container can allocate
+          memory: "256M"
+        # The platform must guarantee the container can allocate at least the configured amount.
+        reservations:
+          cpus: "0.5"
+          memory: "128M"
 
   express-app:
     container_name: express-app
@@ -23,6 +36,14 @@ services:
       postgres:
         condition: service_healthy
         restart: true
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "256M"
+        reservations:
+          cpus: "0.5"
+          memory: "128M"
   postgres:
     image: postgres:17.2
     container_name: postgres

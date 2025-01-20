@@ -4,7 +4,9 @@
   },
   "imports": {
     "@std/assert": "jsr:@std/assert@1",
+    "@types/k6": "npm:@types/k6@^0.54.2",
     "js-yaml": "npm:js-yaml@^4.1.0",
+    "k6": "npm:k6@^0.0.0",
     "postgres": "npm:postgres@^3.4.4",
     "prom-client": "npm:prom-client@^15.1.3"
   }
