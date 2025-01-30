@@ -1,0 +1,26 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: "cadvisor"
+    static_configs:
+      - targets: ["cadvisor:8080"]
+
+  - job_name: "deno-app"
+    metrics_path: "/metrics"
+    static_configs:
+      - targets: ["deno-app:8080"]
+
+remote_write:
+  - url: "http://localhost:9090/api/v1/write"
+    remote_timeout: 30s
+    queue_config:
+      capacity: 10000
+      max_samples_per_send: 1000
+      batch_send_deadline: 5s
+      min_shards: 1
+      max_shards: 1
+    write_relabel_configs:
+      - source_labels: [__name__]
+        regex: "k6_.*"
+        action: keep
